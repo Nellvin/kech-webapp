@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from 'src/app/kech-webapp-library/services/shared.service'
 
 @Component({
   selector: 'app-seremons',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SeremonsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service:SharedService) { }
+
+  sermonsList: any= [];
 
   ngOnInit(): void {
+    this.refreshSermonyList();
+  }
+
+  refreshSermonyList(){
+    this.service.getSermonyList().subscribe(data =>{
+      this.sermonsList = data;
+    })
   }
 
 }
