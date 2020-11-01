@@ -14,8 +14,10 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AboutUsComponent } from './kech-webapp-library/components/about-us/about-us.component';
 import { MatCardModule } from '@angular/material/card';
+import { NgxAudioPlayerModule } from 'ngx-audio-player';
+import { SharedService } from './kech-webapp-library/services/shared.service'
 
-
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -35,8 +37,10 @@ import { MatCardModule } from '@angular/material/card';
     TooltipModule,
     ModalModule,
     MatCardModule,
+    NgxAudioPlayerModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
