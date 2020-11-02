@@ -17,7 +17,10 @@ import { MatCardModule } from '@angular/material/card';
 import { NgxAudioPlayerModule } from 'ngx-audio-player';
 import { SharedService } from './kech-webapp-library/services/shared.service'
 
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { NewsComponent } from './kech-webapp-library/components/news/news.component';
+import { GalleryComponent } from './kech-webapp-library/components/gallery/gallery.component';
+import { NewsPageComponent } from './kech-webapp-library/components/news-page/news-page.component'
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { HttpClientModule } from '@angular/common/http'
     HeaderComponent,
     SeremonsAudioComponent,
     SeremonsComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    NewsComponent,
+    GalleryComponent,
+    NewsPageComponent
   ],
   imports: [
     BrowserModule,
