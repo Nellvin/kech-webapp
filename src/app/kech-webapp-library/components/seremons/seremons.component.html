@@ -1,8 +1,10 @@
 <div class="container">
-    <app-seremons-audio></app-seremons-audio>
-    <app-seremons-audio></app-seremons-audio>
-    <app-seremons-audio></app-seremons-audio>
-    <app-seremons-audio></app-seremons-audio>
-    <app-seremons-audio></app-seremons-audio>
-    <app-seremons-audio></app-seremons-audio>
+
+    <div *ngFor= "let sermon of sermonsList">
+        <p>{{sermon.name}}</p>
+        <app-seremons-audio [sermon]="sermon"></app-seremons-audio>
+        
+    </div>
+
+   
 </div>

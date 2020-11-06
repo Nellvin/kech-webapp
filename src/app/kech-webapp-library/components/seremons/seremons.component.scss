@@ -1,1 +1,7 @@
 @import 'src/app/app.component.scss';
+div{
+    img{
+        max-height: 300px;
+        max-width: 300px;
+    }
+}
