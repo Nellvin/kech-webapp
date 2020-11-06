@@ -1,1 +1,16 @@
-<p>news-page works!</p>
+<div class="mainRow">
+    <div *ngFor= "let news of newsList">
+        <app-news [news]="news"></app-news>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button [disabled]="previousDisabled" class="btn btn-primary" (click)="previousPage()">previous</button>
+        </div>
+        <div class="col-5">
+            <p>{{page+1}} of {{pagesCount+1}}</p>
+        </div>
+        <div class="col">
+            <button [disabled]="nextDisabled" class="btn btn-primary" (click)="nextPage()">next</button>
+        </div>
+      </div>
+</div>
