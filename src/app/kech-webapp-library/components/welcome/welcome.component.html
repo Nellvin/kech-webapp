@@ -1,1 +1,42 @@
-<p>welcome works!</p>
+<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark main-welcome">
+    <div class="col-md-6 px-0">
+      <h1 class="display-4 font-italic">Serdecznie witamy,</h1>
+      <p class="lead my-3"> to jest strona Zboru w Piotrkowie Trybunalskim Kościoła Ewangelicznych Chrześcijan w Rzeczpospolitej Polskiej.</p>
+    </div>
+  </div>
+
+<div class="mainRow">
+  <blockquote class="blockquote text-center">
+    <p class="mb-5 mt-5">Kościół Ewangelicznych Chrześcijan w RP to wspólnota ludzi oddanych Bogu, wiernych Jego Słowu, zjednoczonych w Chrystusie oraz zaangażowanych w dzieło głoszenia Ewangelii i okazywanie praktycznej miłości innym ludziom.</p>
+    <!-- <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer> -->
+  </blockquote>
+
+  <h2>Aktualności</h2>
+    <div class="d-flex justify-content-center">
+        <div class ="news" *ngFor = "let news of newsList">
+            <div class="card mb-6">
+                <div class="row no-gutters">
+                  <div class="col">
+                    <img src="http://localhost:8080/api/posts/{{news.id}}/image" class="card-img" alt="...">
+                  </div>
+                  <div class="col">
+                    <div class="card-body">
+                      <h3 class="card-title">{{news.title}}</h3>
+                      <p class="card-text">{{news.content}}</p>
+                      <p class="card-text"><small class="text-muted">{{news.createDate}}</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+    <div>
+        <h2>Ostatnie Kazania</h2>
+        <div class="row row-cols-1 row-cols-md-2">
+            <div class="col mb-4" *ngFor= "let sermon of sermonsList">
+                <p>{{sermon.name}}</p>
+                <app-seremons-audio [sermon]="sermon"></app-seremons-audio>
+            </div>
+        </div> 
+    </div>
+</div>

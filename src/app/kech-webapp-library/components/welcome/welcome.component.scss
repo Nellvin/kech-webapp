@@ -1,0 +1,27 @@
+.mainRow{
+    margin: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+    max-width: 65rem;
+    align-items: center;
+
+    .news{
+        // margin: 0 10% 2% 10%;
+        position: relative;
+        padding: 10px;
+    }
+
+    img{
+        max-height: 300px;
+        max-width: 300px;
+    }
+}
+
+.main-welcome{
+    background-image: url("/assets/P1220401.jpg") ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; 
+    min-height: 300px;
+}
