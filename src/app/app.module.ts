@@ -20,7 +20,18 @@ import { SharedService } from './kech-webapp-library/services/shared.service'
 import { HttpClientModule } from '@angular/common/http';
 import { NewsComponent } from './kech-webapp-library/components/news/news.component';
 import { GalleryComponent } from './kech-webapp-library/components/gallery/gallery.component';
-import { NewsPageComponent } from './kech-webapp-library/components/news-page/news-page.component'
+import { NewsPageComponent } from './kech-webapp-library/components/news-page/news-page.component';
+import { FooterComponent } from './kech-webapp-library/components/footer/footer.component'
+import {} from 'googlemaps';
+import { YoutubeLiveComponent } from './kech-webapp-library/components/youtube-live/youtube-live.component';
+import { LoginComponent } from './kech-webapp-library/components/Administration/login/login.component';
+import { AdminComponent } from './kech-webapp-library/components/Administration/admin/admin.component';
+import { AuthGuard } from './Guard/auth.guard';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NewsFormComponent } from './kech-webapp-library/components/Administration/Forms/news-form/news-form.component';
+import { SermonFormComponent } from './kech-webapp-library/components/Administration/Forms/sermon-form/sermon-form.component';
+import { PhotoFormComponent } from './kech-webapp-library/components/Administration/Forms/photo-form/photo-form.component'
+
 
 @NgModule({
   declarations: [
@@ -32,7 +43,14 @@ import { NewsPageComponent } from './kech-webapp-library/components/news-page/ne
     AboutUsComponent,
     NewsComponent,
     GalleryComponent,
-    NewsPageComponent
+    NewsPageComponent,
+    FooterComponent,
+    YoutubeLiveComponent,
+    LoginComponent,
+    AdminComponent,
+    NewsFormComponent,
+    SermonFormComponent,
+    PhotoFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,8 +63,10 @@ import { NewsPageComponent } from './kech-webapp-library/components/news-page/ne
     MatCardModule,
     NgxAudioPlayerModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [SharedService],
+  providers: [SharedService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
