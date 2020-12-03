@@ -1,5 +1,10 @@
 <div class="container">
 
+    <div *ngIf="sermonsList.length == 0 ">
+        <p>
+            Póki co nie ma żadnych kazań
+        </p>
+    </div>
     <div *ngFor= "let sermon of sermonsList">
         <p>{{sermon.name}}</p>
         <app-seremons-audio [sermon]="sermon"></app-seremons-audio>

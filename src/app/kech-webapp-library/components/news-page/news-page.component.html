@@ -1,4 +1,10 @@
 <div class="mainRow">
+    <div *ngIf="newsList.length == 0 ; else content">
+        <p>
+            Póki co nie ma żadnych aktualności
+        </p>
+    </div>
+    <ng-template #content>
     <div *ngFor= "let news of newsList">
         <app-news [news]="news"></app-news>
     </div>
@@ -13,4 +19,5 @@
             <button [disabled]="nextDisabled" class="btn btn-primary" (click)="nextPage()">next</button>
         </div>
       </div>
+      </ng-template> 
 </div>
