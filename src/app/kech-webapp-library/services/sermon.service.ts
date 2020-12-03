@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SharedService {
-
+export class SermonService {
+  
   readonly API_URL = "http://localhost:8080/api"
-
+  
   constructor(private http:HttpClient) { }
 
   getSermonyList():Observable<any[]>{
@@ -30,8 +30,4 @@ export class SharedService {
   deleteSermon(val:any){
     return this.http.delete(this.API_URL+'/sermons', val)
   }
-
-  // getSermonAudio():Observable<any>{
-  //   return this.http.get<any>('http://localhost:8080/api/sermon/{{mainSermon.id}}/audio')
-  // }
 }
