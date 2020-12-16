@@ -1,5 +1,5 @@
 <div class="shadow col-md-6 offset-md3 p-3 m-3">
-    <form (ngSubmit)="saveSermon()" #newsForm="ngForm"  >
+    <form (ngSubmit)="saveSermon()" #sermonForm="ngForm"  >
                 <!-- name: String
                 desc: String
                 date: Date
@@ -8,6 +8,7 @@
         <div class="form-group">
             <label>Tytuł</label>
             <input
+            required
             [(ngModel)] = sermon.name  
             name="name"    
             id="name"
@@ -26,7 +27,7 @@
         <div class="form-group">
             <label>Data kazania</label>
             <input 
-            [(ngModel)] = sermon.date  
+            [(ngModel)] = sermon.date
             name="date"    
             id="date"
             type="date" 
@@ -37,7 +38,7 @@
             <input 
             name="image"
             id="image"
-            (change)="handleAudioInput($event.target.files)"    
+            (change)="handleImageInput($event.target.files)"    
             type="file" 
             class="form-control"
             accept="image/*">
@@ -45,23 +46,24 @@
         <div class="form-group">
             <label>Kazanie audio</label>
             <input 
+            required
             name="audio"
             id="audio"
-            (change)="handleImageInput($event.target.files)"    
+            (change)="handleAudioInput($event.target.files)"    
             type="file" 
             class="form-control" 
             accept="audio/*">
         </div>
       
-        <button 
-        [disabled] = "!newsForm.valid"
-        class ="btn btn-primary" 
-        type="submit" 
-        value="Stwórz">Stwórz</button>
+        <button [disabled] = "!sermonForm.valid" class ="btn btn-primary" type="submit" value="Stwórz">
+            <span *ngIf="!uploadingInProgress">Stwórz</span>
+            <span *ngIf="uploadingInProgress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span *ngIf="uploadingInProgress" class="sr-only">Loading...</span>
+        </button>
     </form>
     </div>
     
-    <div class="shadow p-3 m-3">        
+    <div class="shadow p-3 m-3  table-responsive">        
         <table class="table table-striped">
             <thead>
                 <tr>    
@@ -69,18 +71,24 @@
                 <th>Opis</th>
                 <th>Data</th>
                 <th>Zdjęcie</th>
-                <th>Data utworzenia</th>
+                <th>Audio</th>
                 <th>Modyfikuj</th>
                 <th>Usuń</th>
             </tr>
             <tr *ngFor = "let sermon of sermonList">
                 <td>{{sermon.name}}</td>
                 <td>{{sermon.desc}}</td>
-                <td>{{sermon.date.substring(0,10)}}</td>
+                <!-- <td>{{sermon.date.substring(0,10)}}</td> -->
+                <td *ngIf="sermon.date != null; else emptyCell">{{sermon.date.substring(0,10)}}</td>
+                <ng-template #emptyCell><td></td></ng-template>
                 <td>{{sermon.image}}</td>
                 <td>{{sermon.audio}}</td>
-                <td><img src="assets\pencil.svg" alt="Modyfikuj"></td>
-                <td><img src="assets\trashcan.svg" alt="Usuń"></td>
+                <td *ngIf="!sermon.deleting" ><img src="assets\pencil.svg" alt=""></td>
+                <td *ngIf="!sermon.deleting" (click)="deleteProccesing(sermon.id)"  ><img src="assets\trashcan.svg" alt=""></td>
+                <td colspan="2" *ngIf="sermon.deleting"  > 
+                    <button type="button" class="btn btn-danger mr-2" (click)="deleteProccesing(sermon.id)"><img src="assets\x.svg" alt=""></button>
+                    <button type="button" class="btn btn-success" (click)="delete(sermon.id)"><img src="assets\check.svg" alt=""></button>
+                </td>
             </tr>
         </thead>
         
