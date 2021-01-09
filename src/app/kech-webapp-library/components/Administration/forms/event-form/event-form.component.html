@@ -1,0 +1,82 @@
+<div class="shadow col-md-6 offset-md3 p-3 m-3">
+    <form (ngSubmit)="saveEvent()" #eventForm="ngForm">
+        <div class="form-group">
+            <label for="title">Nazwa</label>
+            <input 
+            required
+            [(ngModel)] = event.name 
+            name="name"    
+            #name="ngModel"  
+            id="name"
+            type="text" 
+            class="form-control"> 
+             <!-- <div 
+                class="alert alert-danger" 
+                *ngIf="!newsForm.submitted  && name.invalid && (name.dirty || name.touched)">
+                 <div 
+                    *ngIf="name.errors.required">
+                    Nie podano tytułu
+                </div>
+                 <div 
+                    *ngIf="name.errors.minlength">
+                    Tytuł jest za którki
+                </div>
+             </div> -->
+        </div>
+        <div class="form-group">
+            <label>Adres</label>
+            <input
+            [(ngModel)] = event.address  
+            name="address"    
+            id="address"
+            type="text"
+            class="form-control"> 
+        </div>
+        <div class="form-group">
+            <label>Data wydarzenia</label>
+            <input 
+            required
+            [(ngModel)] = event.datetime  
+            name="datetime"    
+            id="datetime"
+            type="datetime-local" 
+            class="form-control"> 
+        </div>
+        <button 
+        [disabled] = "!eventForm.valid" class ="btn btn-primary" type="submit" value="Stwórz">
+        <span *ngIf="!uploadingInProgress">
+            <div *ngIf="!eventUpdating">Stwórz</div>
+            <div *ngIf="eventUpdating">Aktualizuj</div>
+        </span>
+        <span *ngIf="uploadingInProgress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span *ngIf="uploadingInProgress" class="sr-only">Loading...</span>
+        </button>
+    </form>
+</div>
+<div *ngIf="!eventUpdating" class="shadow p-3 m-3 table-responsive" >        
+    <table class="table table-striped">
+        <thead>
+            <tr>    
+                <th>Nazwa</th>
+                <th>Adres</th>
+                <th>Data wydarzenia</th>
+                <th>Modyfikuj</th>
+                <th>Usuń</th>
+            </tr>
+            <tr *ngFor = "let event of eventList">
+                <td>{{event.name}}</td>
+                <td>{{event.address}}</td>
+                <!-- <td>{{event.datetime}}</td> -->
+                <td *ngIf="event.datetime != null; else emptyCell">{{this.event.datetime.substring(0,10) + ' ' + this.event.datetime.substring(11,16)}}</td>
+                <ng-template #emptyCell><td></td></ng-template>
+                <td *ngIf="!event.deleting" (click)="update(event.id)" ><img src="assets\pencil.svg" alt=""></td>
+                <td *ngIf="!event.deleting" (click)="deleteProccesing(event.id)"  ><img src="assets\trashcan.svg" alt=""></td>
+                <td colspan="2" *ngIf="event.deleting"  > 
+                    <button type="button" class="btn btn-danger mr-2" (click)="deleteProccesing(event.id)"><img src="assets\x.svg" alt=""></button>
+                    <button type="button" class="btn btn-success" (click)="delete(event.id)"><img src="assets\check.svg" alt=""></button>
+                </td>
+            </tr>
+        </thead>
+        
+    </table>
+</div>
