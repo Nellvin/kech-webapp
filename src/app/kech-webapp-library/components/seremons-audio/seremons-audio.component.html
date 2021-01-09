@@ -1,14 +1,18 @@
 <mat-card class="example-card">
     <mat-card-header>
-      <div mat-card-avatar 
+      <div *ngIf= "mainSermon.photoUrl != null;else empty"mat-card-avatar 
       style=
       "background-image: url('http://localhost:8080/api/sermon/{{mainSermon.id}}/image');
       background-size: cover;"></div>
+      <ng-template #empty></ng-template>
       <mat-card-title>{{mainSermon.name}}</mat-card-title>
       <!-- <mat-card-subtitle>{{mainSermon.}}</mat-card-subtitle> -->
     </mat-card-header>
     <!-- <img mat-card-image src="http://localhost:8080/api/sermon/{{mainSermon.id}}/image"> -->
     <mat-card-content>
+      <div class="p-2">
+        {{mainSermon.desc}}
+      </div>
         <ngx-audio-player [playlist]="msaapPlaylist" [displayTitle]="msaapDisplayTitle" [autoPlay]="false" 
         muted="muted" [displayPlaylist]="msaapDisplayPlayList" [pageSizeOptions]="msaapPageSizeOptions " 
         [displayVolumeControls]="msaapDisplayVolumeControls" [disablePositionSlider]="msaapDisablePositionSlider" 

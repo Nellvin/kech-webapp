@@ -1,14 +1,18 @@
-<div class="container">
-
-    <div *ngIf="sermonsList.length == 0 ">
+<div class="row justify-content-around">
+    <!-- <div class="row justify-content-center tz-gallery" *ngFor= "let rowPhotos of dividedPhotos; let i=index;" >
+    <div class="col-sm-6 col-md-4 " *ngFor= "let photo of rowPhotos; let j=index;"> -->
+    <div *ngIf ="showSpinner" class="col-sm-6 col-md-4 justify-content-center">
+        <div class="spinner-border big-spinner m-3" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div *ngIf="sermonsList.length == 0 && !showSpinner">
         <p>
             Póki co nie ma żadnych kazań
         </p>
     </div>
     <div *ngFor= "let sermon of sermonsList">
-        <p>{{sermon.name}}</p>
         <app-seremons-audio [sermon]="sermon"></app-seremons-audio>
-        
     </div>
 
    

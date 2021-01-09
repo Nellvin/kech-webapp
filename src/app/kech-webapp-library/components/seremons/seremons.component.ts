@@ -11,6 +11,7 @@ export class SeremonsComponent implements OnInit {
   constructor(private service:SharedService) { }
 
   sermonsList: any= [];
+  showSpinner: boolean = true;
 
   ngOnInit(): void {
     this.refreshSermonyList();
@@ -18,8 +19,15 @@ export class SeremonsComponent implements OnInit {
 
   refreshSermonyList(){
     this.service.getSermonyList().subscribe(data =>{
+      console.log(data)
       this.sermonsList = data;
-    })
+      this.showSpinner = false
+      // if(data != null)
+     }, error =>{
+      this.showSpinner = false
+      console.log(error);
+     } )
+
   }
 
 }
