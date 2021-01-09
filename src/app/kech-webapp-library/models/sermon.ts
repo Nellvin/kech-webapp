@@ -1,7 +1,11 @@
 export class Sermon {
-    name: String
-    desc: String
-    date: Date
+    id: Number
+    name: string
+    desc: string
+    date: string
     image: File
     audio: File
+    deleting: boolean = false;
+    url: string
+    photoUrl: string;
 }
