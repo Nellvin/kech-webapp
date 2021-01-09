@@ -10,13 +10,13 @@
     </div>
     <div class="row">
         <div class="col">
-            <button [disabled]="previousDisabled" class="btn btn-primary" (click)="previousPage()">previous</button>
+            <button [disabled]="previousDisabled" class="btn btn-primary" (click)="previousPage()">Poprzednia</button>
         </div>
         <div class="col-5">
-            <p>{{page+1}} of {{pagesCount+1}}</p>
+            <p>{{page+1}} z {{pagesCount+1}}</p>
         </div>
         <div class="col">
-            <button [disabled]="nextDisabled" class="btn btn-primary" (click)="nextPage()">next</button>
+            <button [disabled]="nextDisabled" class="btn btn-primary" (click)="nextPage()">Następna</button>
         </div>
       </div>
       </ng-template> 

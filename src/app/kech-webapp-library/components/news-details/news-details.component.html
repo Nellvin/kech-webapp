@@ -1,0 +1,15 @@
+<div class="custom-card flex-row flex-wrap m-2 ">
+    <div class="custom-card card" >
+        <div class="card-header border-0">
+            <img *ngIf = "news.filePath != null" class="card-img" src="http://localhost:8080/api/posts/{{news.id}}/image" alt="">
+        </div>
+          <!-- <img class="card-img-top" src="/assets/icon.png" alt="Card image cap"> -->
+          <div class="card-body">
+            <h2 class="card-title">{{news.title}}</h2>
+            <p class="card-text">{{news.content}}</p>
+            <p *ngIf = "news.createDate != null; else blank" class="card-text"><small class="text-muted">{{news.createDate.substring(0,10)}}</small></p>
+            <ng-template #blank><p class="card-text"><small class="text-muted"></small></p></ng-template>
+            <a routerLink="/aktualnosci" class="btn btn-primary">Cofnij</a>
+          </div>
+        </div>
+  </div>

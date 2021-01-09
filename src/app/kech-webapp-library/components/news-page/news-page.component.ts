@@ -9,7 +9,7 @@ import { Router, ActivatedRoute  } from '@angular/router';
 })
 export class NewsPageComponent implements OnInit {
 
-  constructor(private service:NewsService,
+  constructor(private service: NewsService,
               private route: ActivatedRoute,
               private router: Router  ) { }
 
@@ -18,15 +18,17 @@ export class NewsPageComponent implements OnInit {
   pagesCount;
   previousDisabled;
   nextDisabled;
+
   ngOnInit(): void {
     this.refreshNewsList();
     this.getNewsPagesCout();
-    this.updateButtons();
+
   }
 
   getNewsPagesCout(){
     this.service.getNewsCount().subscribe(data =>{
       this.pagesCount = data;
+      this.updateButtons();
     })
   }
 
