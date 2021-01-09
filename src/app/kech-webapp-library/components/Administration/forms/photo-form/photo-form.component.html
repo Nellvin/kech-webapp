@@ -1,85 +1,124 @@
 <div class="shadow col-md-6 offset-md3 p-3 m-3">
-    <form (ngSubmit)="saveSermon()" #newsForm="ngForm"  >
-                <!-- name: String
-                desc: String
-                date: Date
-                image: File
-                audio: File -->
+    <form *ngIf="!addingAlbum" (ngSubmit)="savePhotos()" #newsForm="ngForm">
+<!-- export class Photo {
+    name: String
+    alt: String
+    url: String
+    uploadDate: Date
+    photo: File
+} -->
         <div class="form-group">
-            <label>Tytuł</label>
-            <input
-            [(ngModel)] = sermon.name  
-            name="name"    
-            id="name"
-            type="text"
-            class="form-control"> 
-        </div>
-        <div class="form-group">
-            <label>Treść</label>
-            <input
-            [(ngModel)] = sermon.desc  
-            name="desc"    
-            id="desc"
-            type="text"
-            class="form-control"> 
-        </div>
-        <div class="form-group">
-            <label>Data kazania</label>
-            <input 
-            [(ngModel)] = sermon.date  
-            name="date"    
-            id="date"
-            type="date" 
-            class="form-control"> 
-        </div>
+            <label>Album</label>
+            <div class="d-flex">
+                <select class="form-control d-inline" (change)="changedOption($event.target.value)"
+                (change)="change($event)" required>
+                    <option [value]="-1" disabled selected>
+                        Wybierz album
+                    </option>
+                    <option [value]="album.id" *ngFor="let album of albums">
+                        {{album.name}} id:{{album.id}}
+                    </option>
+                </select>
+                <button (click)="addAlbum()" class ="btn btn-primary d-inline">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" width="32" height="32" class="bi bi-file-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4z"/>
+                        <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>   
         <div class="form-group">
             <label>Zdjęcie</label>
             <input 
             name="image"
             id="image"
-            (change)="handleAudioInput($event.target.files)"    
-            type="file" 
-            class="form-control"
-            accept="image/*">
-        </div>
-        <div class="form-group">
-            <label>Kazanie audio</label>
-            <input 
-            name="audio"
-            id="audio"
             (change)="handleImageInput($event.target.files)"    
             type="file" 
-            class="form-control" 
-            accept="audio/*">
+            class="form-control-file"
+            accept="image/*"
+            multiple
+            (change)="change($event)">
         </div>
-      
         <button 
-        [disabled] = "!newsForm.valid"
-        class ="btn btn-primary" 
-        type="submit" 
-        value="Stwórz">Stwórz</button>
+            [disabled] = "!newsForm.valid"
+            class ="btn btn-primary" 
+            type="submit" 
+            value="Stwórz"
+            >
+            <span *ngIf="!uploadingInProgress">
+                Dodaj
+            </span>
+            <span *ngIf="uploadingInProgress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span *ngIf="uploadingInProgress" class="sr-only">Loading...</span>
+        </button>
     </form>
+    <form *ngIf="addingAlbum" (ngSubmit)="saveAlbum()" #albumForm="ngForm"> 
+                <div class="form-group">
+                    <label>Nazwa</label>
+                    <input 
+                    [(ngModel)] = album.name
+                    name="name"
+                    id="name"
+                    type="text" 
+                    class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Data utworzenia</label>
+                    <input 
+                    [(ngModel)] = album.createDate
+                    name="createDate"
+                    id="createDate"
+                    type="date" 
+                    class="form-control">
+                </div> 
+                <div class="form-group">
+                    <button  
+                    [disabled] = "!albumForm.valid"
+                    class ="d-inline btn btn-primary" 
+                    type="submit" 
+                    value="Stwórz">
+                    <span *ngIf="!uploadingInProgress">
+                        Stwórz
+                    </span>
+                    <span *ngIf="uploadingInProgress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span *ngIf="uploadingInProgress" class="sr-only">Loading...</span>
+                </button>
+                    <buton
+                    [disabled]="uploadingInProgress"
+                    *ngIf="addingAlbum"
+                    class="d-inline btn btn-secondary"
+                    type="reset"
+                    (click)="cancelCreateAlbum()"
+                    value="anuluj">
+                        Anuluj</buton>
+                </div>  
+                
+            </form>
     </div>
-    
-    <div class="shadow p-3 m-3">        
+    <div *ngIf="!albumSelected && !addingAlbum">
+        <p>
+            Wybierz album, aby zobaczyć zdjęcia
+        </p>
+    </div>
+    <div *ngIf="!addingAlbum" class="shadow p-3 m-3  table-responsive">        
         <table class="table table-striped">
             <thead>
                 <tr>    
                 <th>Nazwa</th>
-                <th>Opis</th>
-                <th>Data</th>
+                <!-- <th>Opis</th> -->
+                <!-- <th>Data</th> -->
                 <th>Zdjęcie</th>
-                <th>Data utworzenia</th>
-                <th>Modyfikuj</th>
+                <th>Data dodania</th>
+                <!-- <th>Modyfikuj</th> -->
                 <th>Usuń</th>
             </tr>
-            <tr *ngFor = "let sermon of sermonList">
-                <td>{{sermon.name}}</td>
-                <td>{{sermon.desc}}</td>
-                <td>{{sermon.date.substring(0,10)}}</td>
-                <td>{{sermon.image}}</td>
-                <td>{{sermon.audio}}</td>
-                <td><img src="assets\pencil.svg" alt="Modyfikuj"></td>
+            <tr *ngFor = "let photo of photoList">
+                <td>{{photo.name}}</td>
+                <!-- <td>{{photo.photo}}</td> -->
+                <td>[]</td>
+                <td *ngIf="photo.createDate != null; else emptyCell">{{photo.createDate.substring(0,10)}}</td>
+                <ng-template #emptyCell><td></td></ng-template>
+                <!-- <td><img src="assets\pencil.svg" alt="Modyfikuj"></td> -->
                 <td><img src="assets\trashcan.svg" alt="Usuń"></td>
             </tr>
         </thead>

@@ -1,0 +1,22 @@
+<div>
+    <a routerLink="../">&larr;powrót</a>
+</div>
+<div class="row justify-content-center tz-gallery" *ngFor= "let rowPhotos of dividedPhotos; let i=index;" >
+    <div class="col-sm-6 col-md-4 " *ngFor= "let photo of rowPhotos; let j=index;">
+    <!-- <div class="col-md-auto " *ngFor= "let photo of rowPhotos; let j=index;"> -->
+        <!-- <div class="card text-center bg-dark text-white">
+            <img alt="..." class="card-img" src="{{photo.url}}">
+            <div class="card-img-overlay p-5 text-center">
+            </div>
+        </div> -->
+        <a class="lightbox" href="">
+            <img src="{{photo.url}}" style="width: 300px; height: 300px; object-fit: cover;" alt="Park">
+        </a>
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+<script>
+    baguetteBox.run('.tz-gallery');
+</script>
