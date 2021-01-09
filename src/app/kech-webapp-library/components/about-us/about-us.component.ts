@@ -32,5 +32,11 @@ export class AboutUsComponent implements OnInit {
     position: uluru,
     map: map,
   });
-}
+
+
+  }
+  sendForm(){
+    
+    
+  }
 }
