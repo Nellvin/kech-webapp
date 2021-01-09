@@ -16,6 +16,20 @@
         max-height: 300px;
         max-width: 300px;
     }
+    .event{
+        position: relative;
+        padding: 10px;
+    }
+
+    .overflow{
+        overflow-x: hidden;
+        overflow-y: scroll;
+        height: 400px;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
 }
 
 .main-welcome{
