@@ -9,13 +9,17 @@ import { YoutubeLiveComponent } from './kech-webapp-library/components/youtube-l
 import { LoginComponent } from './kech-webapp-library/components/Administration/login/login.component';
 import { AdminComponent } from './kech-webapp-library/components/Administration/admin/admin.component';
 import { AuthGuard } from './Guard/auth.guard';
+import { NewsDetailsComponent } from './kech-webapp-library/components/news-details/news-details.component';
+import { GalleryDetailsComponent } from './kech-webapp-library/components/gallery-details/gallery-details.component';
 
 const routes: Routes = [
   {path: 'home', component: WelcomeComponent},
   {path: 'kazania', component: SeremonsComponent},
   {path: 'kontakt', component: AboutUsComponent},
   {path: 'aktualnosci', component: NewsPageComponent},
+  {path: 'aktualnosci/:id', component: NewsDetailsComponent},
   {path: 'galeria', component: GalleryComponent}, 
+  {path: 'galeria/:id', component: GalleryDetailsComponent}, 
   {path: 'live', component: YoutubeLiveComponent}, 
   {path: 'login', component: LoginComponent}, 
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]}, 

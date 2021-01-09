@@ -1,2 +1,27 @@
-<app-news-form></app-news-form>
+<!-- <app-news-form></app-news-form>
 <app-sermon-form></app-sermon-form>
+<app-photo-form></app-photo-form>
+<app-event-form></app-event-form> -->
+
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Artykuły">
+      <ng-template matTabContent>
+        <app-news-form></app-news-form>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Nagrania kazań">
+      <ng-template matTabContent>
+        <app-sermon-form></app-sermon-form>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Galerie zdjęć">
+      <ng-template matTabContent>
+        <app-photo-form></app-photo-form>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Wydarzenia">
+      <ng-template matTabContent>
+        <app-event-form></app-event-form>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>

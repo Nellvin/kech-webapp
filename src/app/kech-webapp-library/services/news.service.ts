@@ -10,6 +10,14 @@ export class NewsService {
   readonly API_URL = "http://localhost:8080/api"
 
   constructor(private http:HttpClient) { }
+  
+  getNews():Observable<News[]>{
+    return this.http.get<News[]>(this.API_URL+'/posts')
+  }
+
+  getSingleNews(id: Number):Observable<News>{
+    return this.http.get<News>(`${this.API_URL}/posts/${id}`)
+  }
 
   getNewsPage(page? : any):Observable<any[]>{
     if(page!= null)
@@ -51,7 +59,7 @@ export class NewsService {
     // return this.http.post(this.API_URL+'/posts_file', news);
   }
 
-  multiTitle(news: News, image : File): Observable<Object>{
+  multiTitle(news: News, image : File): Observable<News>{
     const formData = new FormData();
     formData.append('post', 
       new Blob(
@@ -60,15 +68,15 @@ export class NewsService {
       )
     );
     formData.append('image', news.image);
-    return this.http.post<any>(this.API_URL+'/G', formData)
+    return this.http.post<News>(this.API_URL+'/G', formData)
     // return this.http.post(this.API_URL+'/posts_file', news);
   }
 
   updateNews(val:any){
-    return this.http.put(this.API_URL+'/posts', val);
+    return this.http.put(`${this.API_URL}/posts/${val.id}`, val);
   }
 
-  deleteSermon(val:any){
-    return this.http.delete(this.API_URL+'/posts', val)
+  deleteNews(val:any){
+    return this.http.delete(`${this.API_URL}/posts/${val}`)
   }
 }
