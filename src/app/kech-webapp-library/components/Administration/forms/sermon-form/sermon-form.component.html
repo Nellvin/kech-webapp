@@ -40,7 +40,7 @@
             id="image"
             (change)="handleImageInput($event.target.files)"    
             type="file" 
-            class="form-control"
+            class="form-control-file"
             accept="image/*">
         </div>
         <div class="form-group">
@@ -51,19 +51,22 @@
             id="audio"
             (change)="handleAudioInput($event.target.files)"    
             type="file" 
-            class="form-control" 
+            class="form-control-file" 
             accept="audio/*">
         </div>
       
         <button [disabled] = "!sermonForm.valid" class ="btn btn-primary" type="submit" value="Stwórz">
-            <span *ngIf="!uploadingInProgress">Stwórz</span>
+            <span *ngIf="!uploadingInProgress">
+                <div *ngIf="!sermonUpdating">Stwórz</div>
+                <div *ngIf="sermonUpdating">Aktualizuj</div>
+            </span>
             <span *ngIf="uploadingInProgress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             <span *ngIf="uploadingInProgress" class="sr-only">Loading...</span>
         </button>
     </form>
     </div>
     
-    <div class="shadow p-3 m-3  table-responsive">        
+    <div *ngIf="!sermonUpdating" class="shadow p-3 m-3  table-responsive">        
         <table class="table table-striped">
             <thead>
                 <tr>    
@@ -83,7 +86,7 @@
                 <ng-template #emptyCell><td></td></ng-template>
                 <td>{{sermon.image}}</td>
                 <td>{{sermon.audio}}</td>
-                <td *ngIf="!sermon.deleting" ><img src="assets\pencil.svg" alt=""></td>
+                <td *ngIf="!sermon.deleting" (click)="update(sermon.id)"><img src="assets\pencil.svg" alt=""></td>
                 <td *ngIf="!sermon.deleting" (click)="deleteProccesing(sermon.id)"  ><img src="assets\trashcan.svg" alt=""></td>
                 <td colspan="2" *ngIf="sermon.deleting"  > 
                     <button type="button" class="btn btn-danger mr-2" (click)="deleteProccesing(sermon.id)"><img src="assets\x.svg" alt=""></button>

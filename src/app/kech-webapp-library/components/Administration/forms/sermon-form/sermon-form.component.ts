@@ -15,6 +15,7 @@ export class SermonFormComponent implements OnInit {
   sermonList: Sermon[] = []
   fileToUpload: File = null;
   uploadingInProgress: boolean = false;
+  sermonUpdating: boolean = false;
 
   constructor(
     private sermonService: SermonService,
@@ -26,26 +27,33 @@ export class SermonFormComponent implements OnInit {
   }
 
   saveSermon(){
-    // console.log(this.sermon)
-    console.log(this.sermon)
-    console.log(this.sermon.date)
     this.uploadingInProgress = true;
+
+    if(this.sermonUpdating){
+      this.sermonService.updateSermon(this.sermon).subscribe(data =>{
+        this.sermonUpdating = false;
+        for(let i = 0; i < this.sermonList.length; i++){ 
+          if(this.sermonList[i].id == this.sermon.id)
+          this.sermonList[i] = this.sermon;
+        }
+        this.createNewSermon();
+        this.sermonUpdating = false;
+       this.uploadingInProgress = false;
+      })
+    }
+    else{
+
     this.sermonService.multipartSermonAdd(this.sermon).subscribe(data => {
       this.sermonList.unshift(this.sermon)
-      // console.log(this.sermon)
-      // console.log(this.sermonList.push(this.sermon))
       this.uploadingInProgress = false;
       this.createNewSermon();
     });
-    // this.sermonService.multiTitle(this.sermon, this.fileToUpload).subscribe(data =>{
-    //   console.log(data)
-    // },error => console.log(error));
+  }
   }
 
   getSermon(){
     this.sermonService.getSermonyList().subscribe(data =>{
       this.sermonList = data
-      // console.log(this.sermonList[0].date)
     })
   }
 
@@ -77,6 +85,15 @@ export class SermonFormComponent implements OnInit {
           this.sermonList.splice(i,1)
     }
     });
+  }
+
+  update(id: Number){
+    this.sermonService.getSermon(id).subscribe(data =>{
+      this.sermon = data;
+      this.sermonUpdating = true;
+      if(this.sermon.date!= null)
+        this.sermon.date = this.sermon.date.substring(0,10)
+    })
   }
 
 }

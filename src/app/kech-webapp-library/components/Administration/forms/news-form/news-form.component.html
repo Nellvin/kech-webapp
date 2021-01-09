@@ -59,21 +59,24 @@
             id="image"
             (change)="handleFileInput($event.target.files)"    
             type="file" 
-            class="form-control" 
+            class="form-control-file" 
             accept="image/*">
         </div>
         <button 
-        [disabled] = "!newsForm.valid"
-        class ="btn btn-primary" 
-        type="submit" 
-        value="Stwórz">Stwórz</button>
+        [disabled] = "!newsForm.valid" class ="btn btn-primary" type="submit" value="Stwórz">
+        <span *ngIf="!uploadingInProgress">
+            <div *ngIf="!newsUpdating">Stwórz</div>
+            <div *ngIf="newsUpdating">Aktualizuj</div>
+        </span>
+        <span *ngIf="uploadingInProgress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span *ngIf="uploadingInProgress" class="sr-only">Loading...</span>
+        </button>
     </form>
-    </div>
-    
-    <div class="shadow p-3 m-3">        
-        <table class="table table-striped">
-            <thead>
-                <tr>    
+</div>
+<div *ngIf="!newsUpdating" class="shadow p-3 m-3 table-responsive" >        
+    <table class="table table-striped">
+        <thead>
+            <tr>    
                 <th>Tytuł</th>
                 <th>Treść</th>
                 <th>Autor</th>
@@ -87,9 +90,14 @@
                 <td>{{news.content}}</td>
                 <td>{{news.author}}</td>
                 <td>{{news.photo}}</td>
-                <td>{{news.createDate.substring(0,10)}}</td>
-                <td><img src="assets\pencil.svg" alt=""></td>
-                <td><img src="assets\trashcan.svg" alt=""></td>
+                <td *ngIf="news.createDate != null; else emptyCell">{{news.createDate.substring(0,10)}}</td>
+                <ng-template #emptyCell><td></td></ng-template>
+                <td *ngIf="!news.deleting" (click)="update(news.id)" ><img src="assets\pencil.svg" alt=""></td>
+                <td *ngIf="!news.deleting" (click)="deleteProccesin(news.id)"  ><img src="assets\trashcan.svg" alt=""></td>
+                <td colspan="2" *ngIf="news.deleting"  > 
+                    <button type="button" class="btn btn-danger mr-2" (click)="deleteProccesin(news.id)"><img src="assets\x.svg" alt=""></button>
+                    <button type="button" class="btn btn-success" (click)="delete(news.id)"><img src="assets\check.svg" alt=""></button>
+                </td>
             </tr>
         </thead>
         
